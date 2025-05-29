@@ -123,64 +123,17 @@ for (let i = 0; i < filterBtn.length; i++) {
   });
 }
 
-// Add return button functionality for project links
+// Add click listeners to project links
 const projectLinks = document.querySelectorAll(".project-item a");
 projectLinks.forEach(link => {
   link.addEventListener("click", function(e) {
     if (!this.getAttribute("target")) {
       e.preventDefault();
-      const currentPage = document.querySelector(".active[data-page]");
       const projectPage = this.getAttribute("href");
-      
-      // Store the current page in session storage
-      sessionStorage.setItem("previousPage", currentPage.dataset.page);
-      
-      // Navigate to the project
       window.location.href = projectPage;
     }
   });
 });
-
-// Add return button if we came from portfolio page
-if (sessionStorage.getItem("previousPage")) {
-  const returnBtn = document.createElement("button");
-  returnBtn.className = "return-btn";
-  returnBtn.innerHTML = '<ion-icon name="arrow-back-outline"></ion-icon> Return to Portfolio';
-  returnBtn.style.cssText = `
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: var(--eerie-black-2);
-    color: var(--orange-yellow-crayola);
-    padding: 10px 20px;
-    border-radius: 14px;
-    border: 1px solid var(--jet);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 1000;
-    transition: var(--transition-1);
-  `;
-  
-  returnBtn.addEventListener("mouseover", function() {
-    this.style.background = "var(--jet)";
-  });
-  
-  returnBtn.addEventListener("mouseout", function() {
-    this.style.background = "var(--eerie-black-2)";
-  });
-  
-  returnBtn.addEventListener("click", function() {
-    const previousPage = sessionStorage.getItem("previousPage");
-    sessionStorage.removeItem("previousPage");
-    window.location.href = "index.html#" + previousPage;
-  });
-  
-  document.body.appendChild(returnBtn);
-}
-
-
 
 // contact form variables
 const form = document.querySelector("[data-form]");
@@ -198,8 +151,6 @@ for (let i = 0; i < formInputs.length; i++) {
     }
   });
 }
-
-
 
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
@@ -250,7 +201,7 @@ const projectData = {
   'powerbi-sales': {
     title: 'Sales Analytics Dashboard',
     subtitle: 'Interactive Power BI Dashboard',
-    image: 'https://powerbi.microsoft.com/pictures/shared/social/social-default-image.png',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
     details: 'Comprehensive sales analytics dashboard providing real-time insights into business performance, trends, and KPIs.',
     technologies: ['Power BI', 'DAX', 'SQL', 'Data Modeling'],
     highlights: [
@@ -264,7 +215,7 @@ const projectData = {
   'diversity': {
     title: 'Diversity & Inclusion Analytics',
     subtitle: 'HR Analytics Dashboard',
-    image: 'https://learn.microsoft.com/en-us/power-bi/create-reports/media/desktop-analytics-pane/analytics-pane-17.png',
+    image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
     details: 'HR analytics solution focused on tracking and improving workplace diversity and inclusion metrics.',
     technologies: ['Power BI', 'Excel', 'Statistical Analysis', 'HR Metrics'],
     highlights: [
@@ -278,7 +229,7 @@ const projectData = {
   'retention': {
     title: 'Customer Retention Analysis',
     subtitle: 'Customer Analytics Dashboard',
-    image: 'https://community.powerbi.com/t5/image/serverpage/image-id/223089i422C78072FEF6F4F/image-size/large',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
     details: 'Advanced customer lifecycle and retention analysis dashboard with predictive churn modeling.',
     technologies: ['Power BI', 'Python', 'Machine Learning', 'SQL'],
     highlights: [
@@ -292,7 +243,7 @@ const projectData = {
   'tableau-retail': {
     title: 'Retail Analytics Dashboard',
     subtitle: 'Tableau Visualization',
-    image: 'https://help.tableau.com/current/pro/desktop/en-us/Resources/Images/Viz_Types_Overview.png',
+    image: 'https://images.unsplash.com/photo-1553484771-047a44eee27a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
     details: 'Comprehensive retail performance analysis dashboard with advanced Tableau features.',
     technologies: ['Tableau', 'SQL', 'Excel', 'Statistical Analysis'],
     highlights: [
@@ -306,82 +257,94 @@ const projectData = {
   'sql-excel': {
     title: 'Data Querying & Reporting',
     subtitle: 'SQL, Excel & Access Analytics',
-    image: 'https://images.unsplash.com/photo-1623282033815-40b05d96c903?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80',
-    details: 'Comprehensive data analysis solution using SQL queries, Excel advanced features, and Access databases for business intelligence and reporting.',
+    image: 'https://images.unsplash.com/photo-1623282033815-40b05d96c903?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    details: 'Comprehensive data analysis solution using SQL queries, Excel advanced features, and Access databases.',
     technologies: ['SQL', 'Excel', 'Access', 'VBA', 'Power Query'],
     highlights: [
       'Complex SQL queries and database management',
       'Advanced Excel formulas and pivot tables',
       'Automated reporting with VBA macros',
-      'Data cleaning and transformation pipelines',
-      'Interactive dashboards and visualizations'
+      'Data cleaning and transformation pipelines'
     ],
     link: 'data-querying-reporting.html'
   }
 };
 
-// Get modal elements
-const projectModal = document.getElementById('project-modal');
-const projectModalTitle = document.getElementById('modal-title');
-const projectModalSubtitle = document.getElementById('modal-subtitle');
-const projectModalImage = document.getElementById('modal-image');
-const projectModalDetails = document.getElementById('modal-details');
-const projectModalTechList = document.getElementById('modal-tech-list');
-const projectModalHighlights = document.getElementById('modal-highlights');
-const projectModalLink = document.getElementById('modal-link');
-
-// Open modal function
-function openProjectModal(projectId) {
-  const project = projectData[projectId];
-  if (!project) return;
-
-  projectModalTitle.textContent = project.title;
-  projectModalSubtitle.textContent = project.subtitle;
-  projectModalImage.src = project.image;
-  projectModalDetails.textContent = project.details;
-  
-  // Set technologies
-  projectModalTechList.innerHTML = project.technologies
-    .map(tech => `<li>${tech}</li>`)
-    .join('');
-  
-  // Set highlights
-  projectModalHighlights.innerHTML = project.highlights
-    .map(highlight => `<li>${highlight}</li>`)
-    .join('');
-  
-  projectModalLink.href = project.link;
-  
-  projectModal.classList.add('active');
-  document.body.style.overflow = 'hidden';
+// Function to handle image loading errors
+function handleImageError(img) {
+  img.onerror = null; // Prevent infinite loop
+  img.src = 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'; // Fallback image
 }
 
-// Close modal function
-function closeProjectModal() {
-  projectModal.classList.remove('active');
-  document.body.style.overflow = '';
-}
+document.addEventListener('DOMContentLoaded', () => {
+  // Get modal elements
+  const projectModal = document.getElementById('project-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalSubtitle = document.getElementById('modal-subtitle');
+  const modalImage = document.getElementById('modal-image');
+  const modalDetails = document.getElementById('modal-details');
+  const modalTechList = document.getElementById('modal-tech-list');
+  const modalHighlights = document.getElementById('modal-highlights');
+  const modalLink = document.getElementById('modal-link');
 
-// Add click listeners to project triggers
-document.querySelectorAll('[data-modal-trigger]').forEach(trigger => {
-  trigger.addEventListener('click', (e) => {
-    e.preventDefault();
-    const projectId = trigger.getAttribute('data-modal-trigger');
-    openProjectModal(projectId);
-  });
-});
+  // Open modal function
+  function openProjectModal(projectId) {
+    const project = projectData[projectId];
+    if (!project) return;
 
-// Close modal when clicking close button or outside
-document.querySelector('.modal-close').addEventListener('click', closeProjectModal);
-projectModal.addEventListener('click', (e) => {
-  if (e.target === projectModal) closeProjectModal();
-});
-
-// Close modal on escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && projectModal.classList.contains('active')) {
-    closeProjectModal();
+    modalTitle.textContent = project.title;
+    modalSubtitle.textContent = project.subtitle;
+    
+    // Set image with error handling
+    modalImage.src = project.image;
+    modalImage.onerror = () => handleImageError(modalImage);
+    
+    modalDetails.textContent = project.details;
+    
+    // Set technologies
+    modalTechList.innerHTML = project.technologies
+      .map(tech => `<li>${tech}</li>`)
+      .join('');
+    
+    // Set highlights
+    modalHighlights.innerHTML = project.highlights
+      .map(highlight => `<li>${highlight}</li>`)
+      .join('');
+    
+    modalLink.href = project.link;
+    
+    // Show modal with animation
+    projectModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
+
+  // Close modal function
+  function closeProjectModal() {
+    projectModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Add click listeners to project triggers
+  document.querySelectorAll('[data-modal-trigger]').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const projectId = trigger.getAttribute('data-modal-trigger');
+      openProjectModal(projectId);
+    });
+  });
+
+  // Close modal when clicking close button or outside
+  document.querySelector('.modal-close').addEventListener('click', closeProjectModal);
+  projectModal.addEventListener('click', (e) => {
+    if (e.target === projectModal) closeProjectModal();
+  });
+
+  // Close modal on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && projectModal.classList.contains('active')) {
+      closeProjectModal();
+    }
+  });
 });
 
 // Contact form handling
